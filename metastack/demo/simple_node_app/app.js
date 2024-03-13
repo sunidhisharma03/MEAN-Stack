@@ -1,7 +1,8 @@
 const http = require('http');
 const fs = require('fs');
 const dir = './public';
-const port = process.env.PORT | 3000; 
+const port = process.env.PORT || 3000;
+
 
 const server = http.createServer((req, res) => {
 
@@ -21,14 +22,15 @@ const server = http.createServer((req, res) => {
 });
 
 const render = (res, file) => {
-  fs.readFile(dir+file, (err, data) => {
-    if (err) {
-      res.writeHead(404, {'Content-Type' : 'text/html'});
-      
-      res.end('<h1>404 File Not Found</h1>');
-    } 
-      res.writeHead(200, {'Content-Type' : 'text/html'});
-      res.end(data);
-    
-  });
-}
+    fs.readFile(`${dir}/${file}`, (err, data) => {
+      if (err) {
+        res.writeHead(404, { 'Content-Type': 'text/html' });
+        res.end('<h1>404 File Not Found</h1>');
+      } else {
+        res.writeHead(200, { 'Content-Type': 'text/html' });
+        res.end(data);
+      }
+    });
+  };
+  
+  
